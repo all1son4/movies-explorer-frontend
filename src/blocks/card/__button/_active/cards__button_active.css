@@ -1,8 +1,0 @@
-.card__button_active {
-  background-color: #EE3465;
-  background-image: url("../../../../images/card__saved-icon.svg");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 12px, 12px;
-  pointer-events: none;
-}
