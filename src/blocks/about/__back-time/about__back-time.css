@@ -1,0 +1,20 @@
+.about__back-time {
+  margin: 0;
+  padding: 0;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: #000000;
+  background-color: #3DDC84;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media screen and (max-width: 320px){
+  .about__back-time {
+    font-size: 11px;
+    line-height: 13px;
+  }
+}

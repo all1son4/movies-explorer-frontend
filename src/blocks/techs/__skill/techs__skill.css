@@ -1,0 +1,40 @@
+.techs__skill {
+  margin: 0 10px 0 0;
+  padding: 0;
+  width: 90px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border-radius: 10px;
+  background-color: #303030;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: -0.04em;
+}
+
+.techs__skill:last-child {
+  margin: 0;
+}
+
+@media screen and (max-width: 768px){
+  .techs__skill {
+    width: 84px;
+    height: 57px;
+  }
+}
+
+@media screen and (max-width: 750px){
+  .techs__skill {
+    margin: 0;
+  }
+}
+
+@media screen and (max-width: 320px){
+  .techs__skill {
+    font-size: 12px;
+    line-height: 15px;
+  }
+}

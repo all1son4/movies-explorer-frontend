@@ -1,0 +1,12 @@
+.card__image {
+  width: 100%;
+  object-fit: cover;
+  margin: 0 0 18px 0;
+  padding: 0;
+}
+
+@media screen and (max-width: 320px){
+  .card__image {
+    margin: 0 0 14px 0;
+  }
+}

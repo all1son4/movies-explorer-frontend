@@ -1,0 +1,12 @@
+.drop__close-button {
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 26.5px;
+  right: 26.5px;
+  width: 22px;
+  height: 22px;
+  border: none;
+  background: url("../../../images/close__icon.svg") no-repeat center;
+  cursor: pointer;
+}

@@ -1,0 +1,15 @@
+.page404__back-link {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: #4285F4;
+  text-decoration: none;
+  margin: 184px 0 0 0;
+  transition: .4s;
+}
+
+.page404__back-link:hover {
+  transition: .4s;
+  opacity: 0.8;
+}
