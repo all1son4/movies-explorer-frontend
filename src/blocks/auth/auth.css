@@ -1,0 +1,22 @@
+.auth {
+  margin: 0 auto;
+  padding: 70px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  max-width: 396px;
+}
+
+@media screen and (max-width: 884px){
+  .auth {
+    padding: 232px 0;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .auth {
+    padding: 56px 30px 56px;
+    align-items: center;
+  }
+}

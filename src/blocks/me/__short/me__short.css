@@ -1,0 +1,23 @@
+.me__short {
+  margin: 18px 0 0 0;
+  padding: 0;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 20px;
+}
+
+@media screen and (max-width: 1010px){
+  .me__short {
+    margin: 16px 0 0 0;
+    font-size: 12px;
+    line-height: 18px;
+  }
+}
+
+@media screen and (max-width: 720px){
+  .me__short {
+    margin: 20px 0 0 0;
+    font-size: 11px;
+    line-height: 16px;
+  }
+}

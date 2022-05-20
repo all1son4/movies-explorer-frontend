@@ -1,0 +1,29 @@
+.techs__skills {
+  margin: 100px 0 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+}
+
+@media screen and (max-width: 768px){
+  .techs__skills {
+    margin: 83px 0 0 0;
+  }
+}
+
+@media screen and (max-width: 750px){
+  .techs__skills {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 10px;
+    margin: 83px 0 0 0;
+  }
+}
+
+@media screen and (max-width: 470px){
+  .techs__skills {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin: 50px 0 0 0;
+  }
+}

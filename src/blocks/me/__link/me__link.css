@@ -1,0 +1,17 @@
+.me__link {
+  margin: 0 20px 0 0;
+  padding: 0;
+  text-decoration: none;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #FFFFFF;
+  transition: .4s
+;
+}
+
+.me__link:hover {
+  transition: .4s;
+  opacity: 0.6;
+}

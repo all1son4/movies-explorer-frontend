@@ -1,0 +1,23 @@
+@import url(../__account-icon/header__account-icon.css);
+
+.header__account {
+  padding: 0;
+  box-sizing: border-box;
+  border: none;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  color: #FFFFFF;
+  background-color: #202020;
+  margin: 0 0 0 50px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: .4s;
+}
+
+.header__account:hover .header__account-icon {
+  background-color: #2BE080;
+  transition: .4s;
+}

@@ -1,0 +1,25 @@
+.card__button {
+  margin: 0 0 18px 0;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 11px;
+  color: #FFFFFF;
+  background-color: #313131;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  width: 100px;
+  height: 29px;
+}
+
+.card__button:hover {
+  opacity: 0.7;
+  transition: .4s;
+  background-color: #EE3465;
+}
+
+@media screen and (max-width: 415px){
+  .card__button {
+    margin: 0 0 14px 0;
+  }
+}

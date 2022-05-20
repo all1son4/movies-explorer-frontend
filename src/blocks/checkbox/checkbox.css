@@ -1,0 +1,24 @@
+.checkbox {
+  margin: 0;
+  padding: 0 30px 0 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border-left: solid 1px #424242;
+  height: 40px;
+}
+
+@media screen and (max-width: 768px){
+  .checkbox {
+    padding: 0 19px 0 21px;
+  }
+}
+
+@media screen and (max-width: 560px) {
+  .checkbox {
+    padding: 0;
+    margin: 32px 0 0 0;
+    border: none;
+  }
+}
