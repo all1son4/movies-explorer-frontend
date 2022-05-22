@@ -12,7 +12,7 @@
   justify-content: center;
 }
 
-@media screen and (max-width: 320px){
+@media screen and (max-width: 500px){
   .about__back-time {
     font-size: 11px;
     line-height: 13px;

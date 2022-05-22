@@ -10,7 +10,7 @@
   grid-area: subtitle;
 }
 
-@media screen and (max-width: 320px){
+@media screen and (max-width: 500px){
   .about__subtitle {
     margin: 52px 0 0 0;
     font-size: 18px;

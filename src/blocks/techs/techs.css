@@ -3,3 +3,9 @@
   margin: 0;
   background-color: #272727;
 }
+
+@media screen and (max-width: 470px){
+  .techs {
+    background-color: #202020;
+  }
+}
