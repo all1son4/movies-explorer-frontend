@@ -1,0 +1,7 @@
+.auth__field_wrong {
+  border: 1px solid #EE3465;
+}
+
+.auth__field_wrong:focus {
+  border: 1px solid #EE3465;
+}

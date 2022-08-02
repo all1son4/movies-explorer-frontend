@@ -1,8 +1,7 @@
 import React from "react";
-import moviePic from '../images/card__picture.png'
 import {useLocation} from "react-router-dom";
 
-function MoviesCard() {
+function MoviesCard(props) {
 
   const location = useLocation();
 
@@ -20,10 +19,16 @@ function MoviesCard() {
     <>
       <article className="card">
         <div className="card__description">
-          <h2 className="card__title">В погоне за бэнкси</h2>
-          <p className="card__duration">27 минут</p>
+          <h2 className="card__title">{props.title}</h2>
+          <p
+            className="card__duration">{props.duration} {props.duration.toString().slice(-1) === '2'
+                                                        || props.duration.toString().slice(-1) === '3'
+                                                        || props.duration.toString().slice(-1) === '4'
+                                                        ? "минуты"
+                                                        : props.duration.toString().slice(-1) === '1'
+                                                        ? "минута" : "минут"}</p>
         </div>
-        <img className="card__image" src={moviePic} alt="Movie title"/>
+        <img className="card__image" src={`https://api.nomoreparties.co${props.image}`} alt="Movie title"/>
         {location.pathname === '/movies'
           ? <button className="card__button" type={'button'} onClick={saveFilmHandle}>Сохранить</button>
           : <button className="card__button card__button_delete" type={'button'} onClick={deleteFilmHandle}/>}

@@ -114,6 +114,7 @@
 @import url(./blocks/footer/__link/footer__link.css);
 
 @import url(./blocks/preloader/preloader.css);
+@import url(./blocks/preloader/_showed/preloader_showed.css);
 @import url(./blocks/preloader/__container/preloader__container.css);
 @import url(./blocks/preloader/__round/preloader__round.css);
 
@@ -144,4 +145,11 @@
 @import url(./blocks/drop/__nav-box/drop__nav-box.css);
 @import url(./blocks/drop/__nav-link/drop__nav-link.css);
 @import url(./blocks/drop/__nav-link/_active/drop__nav-link_active.css);
+
+@import url(./blocks/popup/popup.css);
+@import url(./blocks/popup/__close-button/popup___close-button.css);
+@import url(./blocks/popup/__container/popup__container.css);
+@import url(./blocks/popup/__icon/popup__icon.css);
+@import url(./blocks/popup/__info/popup__info.css);
+@import url(./blocks/popup/_opened/popup_opened.css);
 
