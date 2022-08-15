@@ -11,8 +11,11 @@
 /*}*/
 
 .card {
+  position: relative;
+  z-index: 0;
   margin: 0;
   padding: 0;
+  overflow: hidden;
   background-color: #222222;
   /*background: linear-gradient(-135deg, #222222, #2F2F2F, #424242, #222222);*/
   /*background-size: 400% 400%;*/
@@ -22,12 +25,18 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   width: 360px;
   font-style: normal;
   object-fit: cover;
   height: 319px;
+  transition: .6s;
   /*animation: background-grad 12s ease infinite;*/
+}
+
+.card:hover {
+  box-shadow: 0 5px 10px 0 rgba(139, 139, 139, 0.3);
+  transition: .6s;
 }
 
 @media screen and (max-width: 884px){

@@ -12,29 +12,12 @@ class Api {
     }
   }
 
-  headers() {
-    return {
-      ...this._headers,
-      'authorization': `Bearer${localStorage.getItem('jwt')}`
-    }
-  }
-
-  // getUserData() {
-  //   return fetch(`${this._endpoint}/users/me`, {
-  //     method: 'GET',
-  //     headers: {
-  //       'Content-type': 'application/json'
-  //     },
-  //     credentials: 'include',
-  //   })
-  //     .then(res => this.getResponseData(res))
-  // }
-
   getSavedMovies() {
     return fetch(`${this._endpoint}/movies`, {
       headers: {
         'Content-type': 'application/json'
-      }
+      },
+      credentials: 'include'
     })
       .then(res => this.getResponseData(res))
   }
@@ -48,7 +31,8 @@ class Api {
       body: JSON.stringify({
         name: name,
         email: email
-      })
+      }),
+      credentials: 'include'
     })
       .then(res => this.getResponseData(res))
   }
@@ -71,7 +55,8 @@ class Api {
         trailerLink: movie.trailerLink,
         image: `https://api.nomoreparties.co${movie.image.url}`,
         thumbnail: `https://api.nomoreparties.co${movie.image.url}`
-      })
+      }),
+      credentials: 'include'
     })
       .then(res => this.getResponseData(res))
   }
@@ -82,49 +67,10 @@ class Api {
       headers: {
         'Content-type': 'application/json'
       },
+      credentials: 'include'
     })
       .then(res => this.getResponseData(res))
   }
-
-  // signin({email, password}) {
-  //   return fetch(`${this._endpoint}/signin`, {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-type': 'application/json'
-  //     },
-  //     credentials: 'include',
-  //     body: JSON.stringify({
-  //       email,
-  //       password
-  //     })
-  //   })
-  //     .then(res => this.getResponseData(res))
-  // }
-
-  // signup({name, email, password}) {
-  //   return fetch(`${this._endpoint}/signup`, {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-type': 'application/json'
-  //     },
-  //     body: JSON.stringify({
-  //       name,
-  //       email,
-  //       password
-  //     })
-  //   })
-  //     .then(res => this.getResponseData(res))
-  // }
-
-  // checkToken() {
-  //   return fetch(`${this._endpoint}/users/me`, {
-  //     method: 'GET',
-  //     headers: {
-  //       'Content-type': 'application/json'
-  //     },
-  //   })
-  //     .then(res => this.getResponseData(res))
-  // }
 }
 
 const

@@ -10,11 +10,20 @@ function SearchBox(props) {
           <div className="search__background-wrap">
             <form className={"search__form"}>
               <img src={magni} alt="search" className="search__magni"/>
-              <input className={"search__input"} placeholder={`Фильм`} value={props.value} onChange={props.onChange}
-                     required/>
+              <input
+                className={`search__input ${props.value === 'Введите ключевое слово!' ? 'search__input_error' : ''}`}
+                placeholder={`Фильм`}
+                value={props.value}
+                onChange={props.onChange}
+                autoComplete={'off'}
+                disabled={props.value === 'Введите ключевое слово!'}
+              />
               <button type={'submit'} className={"search__button"} onClick={props.onSubmit}>Найти</button>
             </form>
-            <Checkbox/>
+            <Checkbox
+              checked={props.checked}
+              toggleCheck={props.toggleCheck}
+            />
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 import {useCallback, useState} from 'react';
 import {validationMessage} from './validationMessage';
 
-function Helper() {
+function ValidationHelper() {
   const [values, setValues] = useState({
     email: '',
     password: '',
@@ -55,5 +55,5 @@ function Helper() {
   }
 }
 
-export default Helper;
+export default ValidationHelper;
 

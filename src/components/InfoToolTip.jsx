@@ -1,9 +1,6 @@
 import React, {useCallback, useEffect} from "react";
-import {useNavigate} from "react-router-dom";
 
 function InfoToolTip(props) {
-  const navigate = useNavigate()
-
   const handleOverlayClick = (event) => {
     if (event.target.classList.contains('popup')) {
       props.setIsOpen(false);
@@ -37,15 +34,6 @@ function InfoToolTip(props) {
       <div className="popup__container popup__container_info">
         <img src={props.config.icon} alt="инфоиконка" className="popup__icon"/>
         <h2 className="popup__info">{props.config.info}</h2>
-        {props.config.status === 'complete' && <button type='button'
-                                                       onClick={
-                                                         () => {
-                                                          props.setIsOpen(false)
-                                                           setTimeout(() => {
-                                                             navigate('/signin')
-                                                           }, 800)
-                                                         }
-                                                       }>Выполнить вход</button>}
       <button type="button" className="popup__close-button" onClick={handleClose}/>
       </div>
     </div>

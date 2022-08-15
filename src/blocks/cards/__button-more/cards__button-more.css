@@ -1,3 +1,16 @@
+@keyframes background-grad {
+  0% {
+    background-position: 0 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}
+
+
 .cards__button-more {
   margin: 0;
   padding: 0;
@@ -17,7 +30,10 @@
 
 .cards__button-more:hover {
   transition: .4s;
-  opacity: 0.6;
+  opacity: 0.7;
+  background: linear-gradient(-135deg, #202020, #424242, #202020);
+  background-size: 200% 200%;
+  animation: background-grad 7s ease infinite;
 }
 
 @media screen and (max-width: 415px){

@@ -1,21 +1,22 @@
 import React, {useState} from "react";
 import logo from '../images/header__logo.svg'
 import {Link, useNavigate} from "react-router-dom";
-import authHelper from "../utils/Helper";
+import validationHelper from "../utils/ValidationHelper";
 import failIcon from "../images/fail_icon.svg";
 import completeIcon from "../images/complete_icon.svg"
 import InfoToolTip from "./InfoToolTip";
 import * as authApi from "../utils/authApi";
 
-function Register({register, registerError}) {
+function Register({onLogin}) {
   const [infoToolTipIsOpen, setInfoToolTipIsOpen] = useState(false)
   const [config, setConfig] = useState({
     info: '',
     icon: '',
     status: ''
   })
+  const navigate = useNavigate()
 
-  const helper = authHelper()
+  const helper = validationHelper()
   const {values, handleChange, errors, isValidate, onFocus} = helper;
 
   const handleSubmit = (event) => {
@@ -31,24 +32,58 @@ function Register({register, registerError}) {
           });
         }
         setInfoToolTipIsOpen(true);
-        helper.afterSubmit();
+        setTimeout(() => {
+          setInfoToolTipIsOpen(false)
+        }, 2000)
+
+        setTimeout(() => {
+          authApi
+            .authorize({
+              email: values.email,
+              password: values.password
+            })
+            .then(res => {
+              if (res.statusCode !== 400 || res.statusCode !== 401) {
+                onLogin();
+                navigate('/movies')
+              } else {
+                setConfig({
+                  icon: failIcon,
+                  info: "Что-то пошло не так. Проверьте логин или пароль.",
+                  status: "fail"
+                })
+                setInfoToolTipIsOpen(true)
+              }
+            })
+            .catch((err) => {
+              console.log(err)
+              setConfig({
+                icon: failIcon,
+                info: "Что-то пошло не так. Проверьте логин или пароль.",
+                status: "fail"
+              })
+              setInfoToolTipIsOpen(true)
+            })
+        }, 2500)
+
       })
       .catch((err) => {
         console.log(err)
-        if (err === 409) {
+        if (err === '409') {
           setConfig({
             info: 'Что-то пошло не так! Кажется такой пользователь уже существует',
             icon: failIcon,
             status: 'fail'
           });
+          setInfoToolTipIsOpen(true)
         } else {
           setConfig({
-            info: 'Что-то пошло не так! Проверьте введенные данные.',
             icon: failIcon,
-            status: 'fail'
-          });
+            info: "Что-то пошло не так. Попробуйте еще раз",
+            status: "fail"
+          })
+          setInfoToolTipIsOpen(true);
         }
-        setInfoToolTipIsOpen(true);
       });
   }
 
@@ -103,9 +138,10 @@ function Register({register, registerError}) {
         />
         {errors.password && <span className="auth__valid-span">{errors.password}</span>}
         <button type="submit"
-                className="auth__submit-button auth__submit-button_register"
-                disabled={infoToolTipIsOpen}
-        >Зарегистрироваться</button>
+                className={`auth__submit-button auth__submit-button_register ${!isValidate || errors.password || errors.email || errors.name ? 'auth__submit-button_disabled' : ''}`}
+                disabled={!isValidate || errors.password || errors.email || errors.name}
+        >Зарегистрироваться
+        </button>
       </form>
       <p className="auth__text">Уже зарегистрированы? <Link to="/signin" target="_self"
                                                             className="auth__link">Войти</Link></p>

@@ -26,10 +26,10 @@ export const logout = () => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      credentials: 'include'
     },
+    credentials: 'include'
   })
-    // .then(res => getResponseData(res))
+    .then(res => getResponseData(res))
 }
 
 export const getCurrentUserInfo = () => {

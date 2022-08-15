@@ -1,19 +1,19 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useState} from "react";
 import logo from '../images/header__logo.svg'
 import {Link, useNavigate} from "react-router-dom";
-import authHelper from "../utils/Helper";
+import validationHelper from "../utils/ValidationHelper";
 import * as authApi from "../utils/authApi";
 import InfoToolTip from "./InfoToolTip";
 import failIcon from "../images/fail_icon.svg";
 
-function Login({setLoggedIn, setLoginCheck, setLoginError, loginError, onLogin}) {
+function Login({onLogin}) {
   const navigate = useNavigate();
   const [infoToolTipIsOpen, setInfoToolTipIsOpen] = useState(false)
-  const helper = authHelper()
+  const helper = validationHelper()
   const {values, handleChange, errors, isValidate, onFocus} = helper;
   const config = {
     icon: failIcon,
-    info: "Что-то пошло не так. Попробуйте еще раз.",
+    info: "Что-то пошло не так. Проверьте логин или пароль.",
     status: "fail"
   }
 
@@ -29,29 +29,16 @@ function Login({setLoggedIn, setLoginCheck, setLoginError, loginError, onLogin})
         email: values.email,
         password: values.password
       })
-      // .then(response => {
-      //   console.log(response)
-      //   if (response.token) {
-      //     localStorage.setItem('jwt', response.token);
-      //     localStorage.setItem('email', response.email);
-      //     setLoggedIn(true);
-      //     setLoginCheck(true);
-      //     navigate('/movies')
-      //   }
-      // })
       .then(res => {
         if (res.statusCode !== 400 || res.statusCode !== 401) {
-          console.log(JSON.stringify(res))
           onLogin();
           navigate('/movies')
-          // localStorage.setItem('userInfo', JSON.stringify(res))
         } else {
           setInfoToolTipIsOpen(true)
         }
       })
       .catch((err) => {
         console.log(err)
-        setLoginError(true)
         setInfoToolTipIsOpen(true)
       })
   }
@@ -91,7 +78,10 @@ function Login({setLoggedIn, setLoginCheck, setLoginError, loginError, onLogin})
           maxLength="30"
           required/>
         {errors.password && <span className="auth__valid-span">{errors.password}</span>}
-        <button type="submit" className="auth__submit-button auth__submit-button_login">Войти</button>
+        <button type="submit"
+                className={`auth__submit-button auth__submit-button_login ${!isValidate || errors.password || errors.email ? 'auth__submit-button_disabled' : ''}`}
+                disabled={!isValidate || errors.password || errors.email}
+        >Войти</button>
       </form>
       <p className="auth__text">Еще не зарегестрированы? <Link to="/signup" target="_self"
                                                                className="auth__link">Регистрация</Link></p>

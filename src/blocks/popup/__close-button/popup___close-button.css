@@ -2,7 +2,8 @@
   position: absolute;
   top: -40px;
   right: -40px;
-  background: transparent url(../../../images/close__icon.svg) no-repeat center;
+  mask-image: url(../../../images/close__icon.svg);
+  background-color: #8B8B8B;
   width: 32px;
   height: 32px;
   margin: 0;

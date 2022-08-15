@@ -1,5 +1,6 @@
 .cards__container {
   margin: 0 auto;
+  min-height: 280px;
   padding: 70px 70px 0 66px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
