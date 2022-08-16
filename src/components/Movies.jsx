@@ -162,9 +162,13 @@ function Movies(props) {
         .deleteMovie(movieForDelete._id)
         .then(() => {
           movie.isSaved = false
-          sessionStorage.setItem('moviesResponse', JSON.stringify(foundMovies.map(savedState)))
           getSavedMovies()
+          if (savedMovies.length === 1) setSavedMovies(null)
+          sessionStorage.setItem('moviesResponse', JSON.stringify(foundMovies.map(savedState)))
         })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   }
 

@@ -12,9 +12,15 @@
   border-bottom: none;
 }
 
-@media screen and (max-width: 320px){
+@media screen and (max-width: 768px){
   .portfolio__item {
     background-position: right 27px;
+    background-size: 18px, 18px;
+  }
+}
+
+@media screen and (max-width: 320px){
+  .portfolio__item {
     background-size: 12px, 12px;
   }
 }
