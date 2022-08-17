@@ -9,37 +9,47 @@ import {durationFilterCallback, keyWordFilterCallback} from "../utils/MoviesHelp
 
 function SavedMovies(props) {
   const [searchValueSaved, setSearchValueSaved] = useState('');
-  const [savedMovies, setSavedMovies] = useState(null)
+  const [savedMovies, setSavedMovies] = useState(JSON.parse(sessionStorage.getItem('moviesResponseSaved')) || null)
   const [voidError, setVoidError] = useState('')
   const [isShortSaved, setIsShortSaved] = useState( false)
   const [showPreloader, setShowPreloader] = useState(false);
+  const [buttonLoader, setButtonLoader] = useState(false)
 
   const getSavedMovies = () => {
     api
       .getSavedMovies()
       .then((res) => {
         setSavedMovies(res)
+        sessionStorage.setItem('moviesResponseSaved', JSON.stringify(res))
         setVoidError('')
       })
       .catch((err) => {
         console.log(err)
-        setVoidError('У пользователя нет сохраненных фильмов')
+        sessionStorage.setItem('moviesResponseSaved', null)
       })
   }
 
   const deleteMovie = (movie) => {
+    setButtonLoader(true)
     api.deleteMovie(movie._id)
       .then(() => {
         getSavedMovies()
+        if (savedMovies.length === 1) setSavedMovies(null)
+      })
+      .finally(() => {
+        setButtonLoader(false)
       })
       .catch((err) => {
+        setButtonLoader(false)
         console.log(err)
       })
   }
 
   useEffect(() => {
-    getSavedMovies()
-  }, [])
+   if (!savedMovies) {
+     setVoidError('У пользователя нет сохраненных фильмов')
+   }
+  }, [savedMovies])
 
   const toggleCheckBox = () => {
     setIsShortSaved(isShortSaved => !isShortSaved)
@@ -106,6 +116,7 @@ function SavedMovies(props) {
         onDelete={deleteMovie}
         checked={isShortSaved}
         preloaderStatus={showPreloader}
+        buttonLoader={buttonLoader}
       />
       <Footer/>
       <DropDownMenu onCloseClick={props.dropToggle}/>

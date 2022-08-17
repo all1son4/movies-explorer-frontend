@@ -14,7 +14,7 @@ function MovieCardList(props) {
 
   useEffect(() => {
     setForRender(durationFilterCallback(props.movies, props.checked))
-  }, [props.checked, props.movies])
+  }, [props.checked])
 
   return (
     <section className="cards">
@@ -26,21 +26,23 @@ function MovieCardList(props) {
               forRender?.slice(0, (props.count + props.length)).map((movie) => {
                 return <MoviesCard key={movie.id}
                                    movie={movie}
-                                   title={movie.nameRU}
+                                   title={movie.nameRU || movie.nameEN}
                                    duration={movie.duration}
                                    image={movie.image.url}
                                    link={movie.trailerLink}
                                    onSave={props.saveHandler}
+                                   buttonLoader={props.buttonLoader}
                 />
               })}
             {location.pathname === '/saved-movies' && forRender?.map((movie, i) => {
                 return <MoviesCard key={`${movie.movieId}/${movie.owner}/${i}`}
                                    movie={movie}
-                                   title={movie.nameRU}
+                                   title={movie.nameRU || movie.nameEN}
                                    duration={movie.duration}
                                    image={movie.image}
                                    link={movie.trailerLink}
                                    onDelete={props.onDelete}
+                                   buttonLoader={props.buttonLoader}
                 />
               })}
           </div>

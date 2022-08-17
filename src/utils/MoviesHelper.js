@@ -8,7 +8,9 @@ export const keyWordFilterCallback = (movies, searchValue) => {
 
 export const durationFilterCallback = (movies, checked) => {
   if (!checked) return movies
-  return movies.filter(movie => {
-    return movie.duration <= 40;
-  });
+  if (movies !== null) {
+    return movies.filter(movie => {
+      return movie.duration <= 40;
+    });
+  }
 };

@@ -13,11 +13,12 @@ import {CurrentUserContext} from "../contexts/contexts";
 function Movies(props) {
   const [searchValue, setSearchValue] = useState(JSON.parse(sessionStorage.getItem('searchValue')) || '');
   const [foundMovies, setFoundMovies] = useState(JSON.parse(sessionStorage.getItem('moviesResponse')) || null)
-  const [savedMovies, setSavedMovies] = useState(null)
+  const [savedMovies, setSavedMovies] = useState(JSON.parse(sessionStorage.getItem('moviesResponseSaved')) || null)
   const [showPreloader, setShowPreloader] = useState(false);
   const [isShort, setIsShort] = useState(JSON.parse(sessionStorage.getItem('checkBoxStatus')) || false)
   const [searchError, setSearchError] = useState('')
   const currentUser = useContext(CurrentUserContext)
+  const [buttonLoader, setButtonLoader] = useState(false)
 
   const setDefaultAmountForView = () => {
     if (document.body.clientWidth < 644) return 5
@@ -48,15 +49,13 @@ function Movies(props) {
       .getSavedMovies()
       .then((res) => {
         setSavedMovies(res)
+        sessionStorage.setItem('moviesResponseSaved', JSON.stringify(res))
       })
       .catch((err) => {
         console.log(err)
+        sessionStorage.setItem('moviesResponseSaved', null)
       })
   }
-
-  useEffect(() => {
-    getSavedMovies()
-  }, [])
 
   const savedState = (movieForSave) => {
     const findMovie = savedMovies?.find(m => m.movieId === movieForSave.id)
@@ -79,7 +78,7 @@ function Movies(props) {
       setFoundMovies(foundMovies.map(savedState));
       sessionStorage.setItem('moviesResponse', JSON.stringify(foundMovies.map(savedState)))
     }
-  }, [savedMovies, foundMovies]);
+  }, [savedMovies]);
 
   const setDefaultView = () => {
     setCount(0)
@@ -91,6 +90,10 @@ function Movies(props) {
   useEffect(() => {
     setDefaultView();
   }, []);
+
+  useEffect(() => {
+    setDefaultView()
+  }, [foundMovies])
 
   useEffect(() => {
     setDefaultView();
@@ -106,7 +109,6 @@ function Movies(props) {
       }, 1500)
       return
     }
-    setLoadMoreVisible(true)
     setShowPreloader(true)
 
     moviesApi
@@ -146,6 +148,7 @@ function Movies(props) {
 
   const saveMovie = (movie) => {
     if (!movie.isSaved) {
+      setButtonLoader(true)
       api
         .saveMovie(movie)
         .then(() => {
@@ -153,11 +156,16 @@ function Movies(props) {
           movie.isSaved = true
           sessionStorage.setItem('moviesResponse', JSON.stringify(foundMovies.map(savedState)))
         })
+        .finally(() => {
+          setButtonLoader(false)
+        })
         .catch((err) => {
+          setButtonLoader(false)
           console.log(err);
         });
     } else {
       const movieForDelete = savedMovies?.find(m => m.movieId === movie.id)
+      setButtonLoader(true)
       api
         .deleteMovie(movieForDelete._id)
         .then(() => {
@@ -166,7 +174,11 @@ function Movies(props) {
           if (savedMovies.length === 1) setSavedMovies(null)
           sessionStorage.setItem('moviesResponse', JSON.stringify(foundMovies.map(savedState)))
         })
+        .finally(() => {
+          setButtonLoader(false)
+        })
         .catch((err) => {
+          setButtonLoader(false)
           console.log(err);
         });
     }
@@ -195,6 +207,7 @@ function Movies(props) {
           preloaderStatus={showPreloader}
           error={searchError}
           saveHandler={saveMovie}
+          buttonLoader={buttonLoader}
         />
       }
       <Footer/>

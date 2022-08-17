@@ -5,10 +5,12 @@ import validationHelper from "../utils/ValidationHelper";
 import * as authApi from "../utils/authApi";
 import InfoToolTip from "./InfoToolTip";
 import failIcon from "../images/fail_icon.svg";
+import ButtonLoader from "./ButtonLoader";
 
 function Login({onLogin}) {
   const navigate = useNavigate();
   const [infoToolTipIsOpen, setInfoToolTipIsOpen] = useState(false)
+  const [buttonLoader, setButtonLoader] = useState(false)
   const helper = validationHelper()
   const {values, handleChange, errors, isValidate, onFocus} = helper;
   const config = {
@@ -24,6 +26,8 @@ function Login({onLogin}) {
       return;
     }
 
+    setButtonLoader(true)
+
     authApi
       .authorize({
         email: values.email,
@@ -37,9 +41,13 @@ function Login({onLogin}) {
           setInfoToolTipIsOpen(true)
         }
       })
+      .finally(() => {
+        setButtonLoader(false)
+      })
       .catch((err) => {
         console.log(err)
         setInfoToolTipIsOpen(true)
+        setButtonLoader(false)
       })
   }
 
@@ -62,6 +70,7 @@ function Login({onLogin}) {
           className={`auth__field ${errors.email ? 'auth__field_wrong' : ''}`}
           minLength="2"
           maxLength="30"
+          disabled={buttonLoader}
           required/>
         {errors.email && <span className="auth__valid-span">{errors.email}</span>}
         <label className="auth__label">Пароль</label>
@@ -76,12 +85,16 @@ function Login({onLogin}) {
           className={`auth__field ${errors.password ? 'auth__field_wrong' : ''}`}
           minLength="8"
           maxLength="30"
+          disabled={buttonLoader}
           required/>
         {errors.password && <span className="auth__valid-span">{errors.password}</span>}
         <button type="submit"
                 className={`auth__submit-button auth__submit-button_login ${!isValidate || errors.password || errors.email ? 'auth__submit-button_disabled' : ''}`}
-                disabled={!isValidate || errors.password || errors.email}
-        >Войти</button>
+                disabled={!isValidate || errors.password || errors.email || buttonLoader}
+        >{buttonLoader
+          ? <ButtonLoader/>
+          : 'Войти'}
+        </button>
       </form>
       <p className="auth__text">Еще не зарегестрированы? <Link to="/signup" target="_self"
                                                                className="auth__link">Регистрация</Link></p>

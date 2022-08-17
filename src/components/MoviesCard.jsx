@@ -1,13 +1,15 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 import activeButton from "../images/card__saved-icon.svg"
 import {CurrentUserContext} from "../contexts/contexts";
+import ButtonLoader from "./ButtonLoader";
 
 function MoviesCard(props) {
 
   const location = useLocation();
   const currentUser = useContext(CurrentUserContext)
   const [hover, setHover] = useState(false)
+  const [currentCard, setCurrentCard] = useState(false)
 
   const linkRedirect = () => {
     window.open(`${props.link}`)
@@ -16,23 +18,30 @@ function MoviesCard(props) {
   const saveMovieHandle = (event) => {
     event.preventDefault()
     props.onSave(props.movie)
+    setCurrentCard(true)
+    onLeave(event)
   }
 
   const deleteMovieHandle = (event) => {
     event.preventDefault()
-    console.log(props.movie)
     props.onDelete(props.movie)
+    setCurrentCard(true)
   }
 
-  const onOver = (event) => {
-    event.preventDefault()
+  const onOver = () => {
     setHover(true)
   }
 
-  const onLeave = (event) => {
-    event.preventDefault()
+  const onLeave = () => {
     setHover(false)
   }
+
+  useEffect(() => {
+    if (!props.buttonLoader) {
+      setCurrentCard(false)
+      onLeave()
+    }
+  }, [props.buttonLoader])
 
   return (
     <>
@@ -60,15 +69,25 @@ function MoviesCard(props) {
                       onClick={saveMovieHandle}
                       onMouseOver={onOver}
                       onMouseLeave={onLeave}
+                      disabled={props.buttonLoader & currentCard}
             >
-              {!props.movie.isSaved
-                ? 'Сохранить'
-                : hover
-                  ? 'Удалить'
-                  : <img src={activeButton} alt={'Галочка'} className={'card__button_active-image'}/>}
-          </button>
+              {props.buttonLoader && currentCard
+                ? <ButtonLoader/>
+                : !props.movie.isSaved
+                  ? 'Сохранить'
+                  : hover && props.movie.isSaved
+                    ? 'Удалить'
+                    : <img src={activeButton} alt={'Галочка'} className={'card__button_active-image'}/>
+              }
+            </button>
             : props.movie.owner === currentUser._id &&
-            <button className="card__button card__button_delete" type={'button'} onClick={deleteMovieHandle}/>}
+            <button className={`card__button ${props.buttonLoader && currentCard ? '' : 'card__button_delete'}`}
+                    type={'button'}
+                    onClick={deleteMovieHandle}
+                    disabled={props.buttonLoader && currentCard}
+            >
+              {props.buttonLoader && currentCard && <ButtonLoader/>}
+            </button>}
         </div>
       </article>
 

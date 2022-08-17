@@ -6,9 +6,11 @@ import failIcon from "../images/fail_icon.svg";
 import completeIcon from "../images/complete_icon.svg"
 import InfoToolTip from "./InfoToolTip";
 import * as authApi from "../utils/authApi";
+import ButtonLoader from "./ButtonLoader";
 
 function Register({onLogin}) {
   const [infoToolTipIsOpen, setInfoToolTipIsOpen] = useState(false)
+  const [buttonLoader, setButtonLoader] = useState(false)
   const [config, setConfig] = useState({
     info: '',
     icon: '',
@@ -21,6 +23,7 @@ function Register({onLogin}) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    setButtonLoader(true)
     authApi
       .register(values)
       .then((res) => {
@@ -34,7 +37,7 @@ function Register({onLogin}) {
         setInfoToolTipIsOpen(true);
         setTimeout(() => {
           setInfoToolTipIsOpen(false)
-        }, 2000)
+        }, 1500)
 
         setTimeout(() => {
           authApi
@@ -64,11 +67,15 @@ function Register({onLogin}) {
               })
               setInfoToolTipIsOpen(true)
             })
-        }, 2500)
+        }, 2)
 
+      })
+      .finally(() => {
+        setButtonLoader(false)
       })
       .catch((err) => {
         console.log(err)
+        setButtonLoader(false)
         if (err === '409') {
           setConfig({
             info: 'Что-то пошло не так! Кажется такой пользователь уже существует',
@@ -104,6 +111,7 @@ function Register({onLogin}) {
           className={`auth__field ${errors.name ? 'auth__field_wrong' : ''}`}
           minLength="2"
           maxLength="30"
+          disabled={buttonLoader}
           required
         />
         {errors.name && <span className="auth__valid-span">{errors.name}</span>}
@@ -119,6 +127,7 @@ function Register({onLogin}) {
           className={`auth__field ${errors.email ? 'auth__field_wrong' : ''}`}
           minLength="2"
           maxLength="30"
+          disabled={buttonLoader}
           required
         />
         {errors.email && <span className="auth__valid-span">{errors.email}</span>}
@@ -134,13 +143,17 @@ function Register({onLogin}) {
           className={`auth__field ${errors.password ? 'auth__field_wrong' : ''}`}
           minLength="8"
           maxLength="30"
+          disabled={buttonLoader}
           required
         />
         {errors.password && <span className="auth__valid-span">{errors.password}</span>}
         <button type="submit"
                 className={`auth__submit-button auth__submit-button_register ${!isValidate || errors.password || errors.email || errors.name ? 'auth__submit-button_disabled' : ''}`}
-                disabled={!isValidate || errors.password || errors.email || errors.name}
-        >Зарегистрироваться
+                disabled={!isValidate || errors.password || errors.email || errors.name || buttonLoader}
+        >{buttonLoader
+          ? <ButtonLoader/>
+          : 'Зарегистрироваться'
+        }
         </button>
       </form>
       <p className="auth__text">Уже зарегистрированы? <Link to="/signin" target="_self"
